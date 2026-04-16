@@ -84,10 +84,10 @@ public class UserController
      * @throws Exception
      */
     @PostMapping( value = "regUser" )
-    public @ResponseBody String regUser( @RequestBody UserJoinModel userJoinModel,
-                                         Model model
-                                         Locale locale
-                                         HttpSession session ) throws Exception
+    public @ResponseBody Map<String, Object> regUser( @RequestBody UserJoinModel userJoinModel,
+                                                       Model model
+                                                       Locale locale
+                                                       HttpSession session ) throws Exception
     {
         // 결과 Return 모델
         ResultModel resultModel = new ResultModel();
@@ -112,7 +112,56 @@ public class UserController
         }
 
         Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("result",       resultModel);
+        ret.put("result", resultModel);
+
+        return ret;
+    }
+
+
+    /**
+     * 사용자 정보 저장
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param userJoinModel
+     * @param model
+     * @param locale
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @PostMapping( value = "saveUser" )
+    public @ResponseBody Map<String, Object> saveUser( @RequestBody UserModel userModel,
+                                                       Model model
+                                                       Locale locale
+                                                       HttpSession session ) throws Exception
+    {
+        // 결과 Return 모델
+        ResultModel resultModel = new ResultModel();
+
+        try
+        {
+            /**
+             * 사용자 정보 저장
+             */
+            userService.saveUser( userModel );
+
+            resultModel.setResultCode(Constants.SUCCESS);
+        }
+        catch( BusinessException be )
+        {
+            resultModel = be.getResultModel();
+        }
+        catch( Exception e )
+        {
+            resultModel = new ResultModel(Constants.FAIL);
+            resultModel.setResultMsg(e.getMessage());
+        }
+
+        Map<String, Object> ret = new HashMap<String, Object>();
+        ret.put("result", resultModel);
 
         return ret;
     }
