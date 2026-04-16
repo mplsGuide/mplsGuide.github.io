@@ -21,10 +21,11 @@
 @RequestMapping("/user/")
 public class UserController
 {
+    // 로그 출력 시 사용 : logger.info(), logger.debug() 등으로 사용
     static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Autowired
-      private UserService userService;
+    private UserService userService;
 
 
     /**
@@ -69,7 +70,7 @@ public class UserController
     }
 
     /**
-     * 사용자 등록
+     * 사용자 정보 등록
      *
      * @version : 1.0
      * @author  : 생성자 ID ( SVN, GIT 등 )
@@ -94,7 +95,7 @@ public class UserController
         try
         {
             /**
-             * 사용자 등록
+             * 사용자 정보 등록
              */
             userService.regUser( userJoinModel );
 
@@ -138,6 +139,7 @@ public class UserController
                                                             HttpSession session,
                                                             HttpServletRequest request ) throws Exception
     {
+        // 결과 Return 모델
         ResultModel resultModel = new ResultModel();
 
         try
