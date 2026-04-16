@@ -1,5 +1,4 @@
 ```XML
-
 <mapper·namespace="연결할 Mapper의 경로 및 Mapper 파일명(../../UserMapper)">
 
 ····// Case 1) SELECT, CASE 활용 예시
@@ -59,5 +58,4 @@
 ····</select>
 
 </mapper>
-
 ```
