@@ -1,5 +1,5 @@
 ---
-title: Coding
+title: 개발 양식
 nav_order: 1
 ---
 
