@@ -1,5 +1,5 @@
 ---
-title: Select Format 
+title: Select 
 parent: xml
 nav_order: 1
 ---
