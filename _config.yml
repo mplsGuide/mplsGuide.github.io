@@ -1,6 +1,11 @@
 title: MPLS Guide
 description: MPLS Guide
+
+url: "https://mplsguide.github.io"
+baseurl: ""
+
 show_downloads: false
+
 remote_theme: Appdynamics/jekyll-rtd-theme
 
 plugins:
