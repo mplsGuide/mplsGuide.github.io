@@ -1,6 +1,6 @@
 ---
-title: Navigation
-nav_order: 5
+title: 코딩
+nav_order: 1
 ---
 
 # Navigation
