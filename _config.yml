@@ -10,7 +10,7 @@ remote_theme: Appdynamics/jekyll-rtd-theme
 
 plugins:
   - jekyll-remote-theme
-
+  
 # RTD 테마 옵션
 toc_enabled: true
 navigation_depth: 3
