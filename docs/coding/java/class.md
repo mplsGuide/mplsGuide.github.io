@@ -1,5 +1,5 @@
 ---
-title: Class Format 
+title: Class 
 parent: java
 nav_order: 1
 ---
