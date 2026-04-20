@@ -1,6 +1,6 @@
 ---
 title: java
-parent: Coding
+parent: 개발 양식
 nav_order: 1
 ---
 
