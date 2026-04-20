@@ -1,3 +1,9 @@
+---
+title: Class Format
+parent: java
+nav_order: 2
+---
+
 ```java
 
 /**
