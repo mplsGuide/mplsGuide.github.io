@@ -1,4 +1,17 @@
 title: MPLS Guide
 description: MPLS Guide
 show_downloads: false
-theme: jekyll-theme-cayman
+remote_theme: Appdynamics/jekyll-rtd-theme
+
+plugins:
+  - jekyll-remote-theme
+
+# RTD 테마 옵션
+toc_enabled: true
+navigation_depth: 3
+collapse_navigation: false
+sticky_navigation: true
+
+# 코드 하이라이트
+markdown: kramdown
+highlighter: rouge
