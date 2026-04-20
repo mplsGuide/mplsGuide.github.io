@@ -1,16 +1,11 @@
 ---
-title: 코딩
+title: Coding
 nav_order: 1
 ---
 
-# Navigation
+# Coding
 
-The default page layout supports various navigation features:
+이 페이지는 개발 시 참고할 코드 작성 양식을 참고할 수 있도록 작성되었습니다.
 
-* a **main navigation** panel, highlighting the currently selected page;
-* a list of **auxiliary** links, shown on all pages;
-* lists of **breadcrumbs**, shown on all except top level pages;
-* optional lists of links to **child pages** (so-called 'tables of contents'); and
-* section heading links for **in-page navigation**, with an optional **back-to-top** link.
 
-See the following pages for how to specify these features, with illustrative examples.
+* 항목은 **java**, **xml**, **js** 등으로 구성되어 있으며, 개발 시에 해당 양식과 동일하게 작성할 수 있도록 해주세요.
