@@ -1,5 +1,5 @@
 ---
-title: Update Format
+title: Update
 parent: xml
 nav_order: 3
 ---
