@@ -1,5 +1,5 @@
 ---
-title: Delete Format
+title: Delete
 parent: xml
 nav_order: 4
 ---
