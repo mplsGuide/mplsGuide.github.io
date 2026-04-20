@@ -2,3 +2,4 @@ title: MPLS Guide
 description: MPLS Guide
 show_downloads: false
 remote_theme: pmarsceill/just-the-docs
+nav_enabled: true
