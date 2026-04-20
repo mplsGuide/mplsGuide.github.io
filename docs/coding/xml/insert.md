@@ -1,5 +1,5 @@
 ---
-title: Insert Format
+title: Insert
 parent: xml
 nav_order: 2
 ---
