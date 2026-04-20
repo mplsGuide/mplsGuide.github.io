@@ -1,7 +1,7 @@
 ---
-title: Class Format
+title: Class Format 
 parent: java
-nav_order: 2
+nav_order: 1
 ---
 
 ```java
