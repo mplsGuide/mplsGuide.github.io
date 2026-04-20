@@ -1,6 +1,6 @@
 ---
 title: java
-parent: coding
+parent: Coding
 nav_order: 1
 ---
 
