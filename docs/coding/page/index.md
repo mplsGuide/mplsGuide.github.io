@@ -1,5 +1,5 @@
 ---
-title: html
+title: page
 parent: 개발 양식
 nav_order: 1
 ---
