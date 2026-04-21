@@ -4,6 +4,11 @@ parent: xml
 nav_order: 4
 ---
 
+# DELETE
+
+* MyBatis를 활용한 DELETE 작성 양식입니다.
+* 작성 시 띄어쓰기, 개행 등을 신경써서 작성해주세요.
+
 ```xml
 
 <mapper namespace="연결할 Mapper의 경로 및 Mapper 파일명(../../UserMapper)">
