@@ -1,6 +1,6 @@
 ---
 title: css
-parent: html
+parent: page
 nav_order: 1
 ---
 
