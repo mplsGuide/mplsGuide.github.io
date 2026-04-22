@@ -1,7 +1,58 @@
 ---
-title: Class 
+title: Controller 
 parent: java
 nav_order: 1
+---
+
+# Controller, 어노테이션
+
+이 페이지는 Controller 작성 양식과 각 어노테이션의 역할, 사용 방법 등을 서술한 페이지입니다.
+
+## Controller의 역할
+
+Controller는 주로 사용자의 요청을 받고, 요청에 해당하는 부분을 처리하여 돌려주는 역할을 담당합니다.
+
+## 어노테이션의 역할
+
+어노테이션은 요청이나 값을 처리하는 방식을 정의하는 데에 사용합니다.
+
+### @Controller
+* 컨트롤러를 지정할 때 사용되는 어노테이션 입니다.
+* Class에 사용하여 컨트롤러를 지정할 수 있습니다.
+
+---
+
+### @RequestMapping
+
+* **@RequestMapping("/url/")**
+  
+  * Class에 사용하여 해당 컨트롤러로 요청받을 URL을 지정할 수 있습니다.
+* **@RequestMapping( value = {"main"} )**, **@RequestMapping( value = {"main"}, RequestMethod.GET )**
+  
+  * 메서드에 지정하여 URL과 GET/POST 방식을 지정할 수 있습니다.
+  * GET/POST 지정 시에는 RequestMethod.GET/POST 형식을 사용하여 지정합니다.
+  * GET/POST 설정이 없을 시 받은 요청의 형식에 따라서 매핑됩니다.
+
+---
+
+### @RequestBody
+
+  * 요청 데이터를 JSON 형식으로 받습니다.
+
+---
+
+### @ResponseBody
+
+  * 응답 데이터를 JSON 형식으로 보냅니다.
+
+---
+
+## 작성 양식
+
+아래는 회원에 관련된 내용을 처리하는 Controller의 구성입니다.
+
+Controller 구성 시 주석, 개행, 띄어쓰기 등을 참조하여 작성해주시길 바랍니다.
+
 ---
 
 ```java
