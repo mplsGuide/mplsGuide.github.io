@@ -75,23 +75,6 @@ nav_order: 3
 public interface UserService
 {
     /**
-     * 회원가입 팝업 View
-     *
-     * @version : 1.0
-     * @author  : 생성자 ID ( SVN, GIT 등 )
-     * @date    : 생성일자 ( 20xx.xx.xx )
-     *
-     * @param locale
-     * @param model
-     * @return
-     */
-    @RequestMapping( value = { "joinViewPopup" }, method = RequestMethod.GET )
-    public String joinViewPopup( Locale locale, Model model )
-    {
-        return "user/joinViewPopup";
-    }
-
-    /**
      * 사용자 목록 조회
      *
      * @version : 1.0
@@ -99,169 +82,45 @@ public interface UserService
      * @date    : 생성일자 ( 20xx.xx.xx )
      *
      * @param map
-     * @param model
-     * @param session
-     * @return
      * @throws Exception
      */
-    @RequestMapping( value = { "getUserList" } )
-    public @ResponseBody List<UserModel> getUserList( @RequestBody Map<String, Object> map,
-                                                      Model model,
-                                                      HttpSession session ) throws Exception
-    {
-        /** 사용자 목록 조회 */
-        List<UserModel> userModels = userService.getUserList( map );
-
-        return userModels;
-    }
+    public List<UserModel> getUserList( Map<String, Object> map ) throws Exception;
 
     /**
-     * 사용자 정보 등록
+     * 사용자 등록
      *
      * @version : 1.0
      * @author  : 생성자 ID ( SVN, GIT 등 )
      * @date    : 생성일자 ( 20xx.xx.xx )
      *
      * @param userJoinModel
-     * @param model
-     * @param locale
-     * @param session
-     * @return
      * @throws Exception
      */
-    @PostMapping( value = "regUser" )
-    public @ResponseBody Map<String, Object> regUser( @RequestBody UserJoinModel userJoinModel,
-                                                       Model model
-                                                       Locale locale
-                                                       HttpSession session ) throws Exception
-    {
-        // 결과 Return 모델
-        ResultModel resultModel = new ResultModel();
-
-        try
-        {
-            /**
-             * 사용자 정보 등록
-             */
-            userService.regUser( userJoinModel );
-
-            resultModel.setResultCode(Constants.SUCCESS);
-        }
-        catch( BusinessException be )
-        {
-            resultModel = be.getResultModel();
-        }
-        catch( Exception e )
-        {
-            resultModel = new ResultModel(Constants.FAIL);
-            resultModel.setResultMsg(e.getMessage());
-        }
-
-        Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("result", resultModel);
-
-        return ret;
-    }
-
+    public void regUser( UserJoinModel userJoinModel ) throws Exception;
 
     /**
-     * 사용자 정보 저장
+     * 사용자 수정
      *
      * @version : 1.0
      * @author  : 생성자 ID ( SVN, GIT 등 )
      * @date    : 생성일자 ( 20xx.xx.xx )
      *
      * @param userModel
-     * @param model
-     * @param locale
-     * @param session
-     * @return
      * @throws Exception
      */
-    @PostMapping( value = "saveUser" )
-    public @ResponseBody Map<String, Object> saveUser( @RequestBody UserModel userModel,
-                                                       Model model
-                                                       Locale locale
-                                                       HttpSession session ) throws Exception
-    {
-        // 결과 Return 모델
-        ResultModel resultModel = new ResultModel();
-
-        try
-        {
-            /**
-             * 사용자 정보 저장
-             */
-            userService.saveUser( userModel );
-
-            resultModel.setResultCode(Constants.SUCCESS);
-        }
-        catch( BusinessException be )
-        {
-            resultModel = be.getResultModel();
-        }
-        catch( Exception e )
-        {
-            resultModel = new ResultModel(Constants.FAIL);
-            resultModel.setResultMsg(e.getMessage());
-        }
-
-        Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("result", resultModel);
-
-        return ret;
-    }
+    public void saveUser( UserModel userModel ) throws Exception;
 
     /**
-     * 사용자 정보 삭제
+     * 사용자 삭제
      *
      * @version : 1.0
      * @author  : 생성자 ID ( SVN, GIT 등 )
      * @date    : 생성일자 ( 20xx.xx.xx )
      *
      * @param map
-     * @param model
-     * @param locale
-     * @param session
-     * @param request
-     * @return
      * @throws Exception
      */
-    @PostMapping("deleteUser")
-    public @ResponseBody Map<String, Object> deleteUser( @RequestBody Map<String, Object> map,
-                                                         Model model,
-                                                         Locale locale,
-                                                         HttpSession session,
-                                                         HttpServletRequest request ) throws Exception
-    {
-        // 결과 Return 모델
-        ResultModel resultModel = new ResultModel();
-
-        try
-        {
-            /**
-             * 사용자 정보 삭제
-             */
-            userService.deleteUser( map, request );
-
-            resultModel.setResultCode(Constants.SUCCESS);
-        }
-        catch ( BusinessException be )
-        {
-            resultModel = be.getResultModel();
-        }
-        catch( Exception e )
-        {
-            resultModel = new ResultModel(Constants.FAIL);
-            resultModel.setResultMsg(e.getMessage());
-        }
-
-        Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("result", resultModel);
-
-        return ret;
-    }
-
+    public void deleteUser( Map<String, Object> map ) throws Exception;
 }
 
 ```
