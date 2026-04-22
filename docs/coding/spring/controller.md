@@ -248,7 +248,6 @@ public class UserController
      * @param model
      * @param locale
      * @param session
-     * @param request
      * @return
      * @throws Exception
      */
@@ -256,8 +255,7 @@ public class UserController
     public @ResponseBody Map<String, Object> deleteUser( @RequestBody Map<String, Object> map,
                                                          Model model,
                                                          Locale locale,
-                                                         HttpSession session,
-                                                         HttpServletRequest request ) throws Exception
+                                                         HttpSession session ) throws Exception
     {
         // 결과 Return 모델
         ResultModel resultModel = new ResultModel();
