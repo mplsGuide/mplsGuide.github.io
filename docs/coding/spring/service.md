@@ -121,6 +121,191 @@ public interface UserService
      * @throws Exception
      */
     public void deleteUser( Map<String, Object> map ) throws Exception;
+
 }
 
 ```
+
+---
+
+## ServiceImpl 작성 양식
+
+* 아래는 회원에 관련된 내용을 처리하는 ServiceImpl의 구성입니다.
+
+* 개발 시에 주석, 개행, 띄어쓰기 등을 참조하여 작성해주시길 바랍니다.
+
+```java
+
+/**
+ * UserService Class ( Class 명 Class )
+ *
+ * @version : 1.0
+ * @author  : 생성자 ID ( SVN, GIT 등 )
+ * @date    : 생성일자 ( 20xx.xx.xx )
+ * @see
+ *
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ * -----------------------------------------------------------------
+ *     수정일            수정자                 수정내용
+ * -----------------------------------------------------------------
+ *     20xx.xx.xx        생성자 ID              최초 생성
+ *
+ * </pre>
+ */
+@Service( value = "userService" )
+public class UserServiceImpl Implements UserService
+{
+    // 로그 출력 시 사용 : logger.info(), logger.debug() 등으로 사용
+    static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    /**
+     * 사용자 목록 조회
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param map
+     * @throws Exception
+     */
+    public List<UserModel> getUserList( Map<String, Object> map ) throws Exception;
+
+    /**
+     * 사용자 등록
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param userJoinModel
+     * @throws Exception
+     */
+    public void regUser( UserJoinModel userJoinModel ) throws Exception
+    {
+        Map<String, Object> paramMap = null;
+
+        boolean isDup = false;
+
+        paramMap = new HashMap<String, Object>();
+        paramMap.put("userId", userJoinModel.getUserId());
+
+        /**
+         * 사용자 ID 중복 여부
+         */
+        isDup = this.isDuplicationUserId(paramMap);
+        
+        if ( !isDup )
+        {
+            try
+            {
+                userJoinModel.setUserTyCd("ROLE_USER");
+
+                userMapper.createUser( userJoinModel );
+            }
+            catch ( Exception e )
+            {
+                logger.error(CommonUtils.getPrintStackTrace(e));
+
+                throw new Exception("오류가 발생하였습니다. 관리자에게 문의해주세요.");
+            }
+        }
+        else
+        {
+            ResultModel resultModel = new ResultModel(Constants.FAIL);
+            resultModel.setResultMsg("중복된 사용자 ID입니다.");
+
+            throw new BusinessException(resultModel);
+        }
+        
+        
+    }
+
+    /**
+     * 사용자 수정
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param userModel
+     * @throws Exception
+     */
+    public void saveUser( UserModel userModel ) throws Exception;
+
+    /**
+     * 사용자 삭제
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param map
+     * @throws Exception
+     */
+    public void deleteUser( Map<String, Object> map ) throws Exception;
+    {
+        String userId = (String) map.get("userId");
+
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("userId", userId);
+        paramMap.put("password", password);
+
+        /**
+         * 사용자 정보 조회
+         */
+        UserModel userModel = userMapper.getUser( map );
+
+        if ( !ObjectUtils.isEmpty(userModel) && !StringUtils.isEmpty(userModel.getUserId()) )
+        {
+            userModel.setPassword(password);
+
+            int deleteUserCnt = userMapper.deleteUser(userModel);
+
+            if ( deleteUserSpprnCnt == 0 || deleteUserCnt == 0 )
+            {
+                logger.error("=============================== [ERROR Start] ==================================");
+                logger.error("[UserServiceImpl.deleteUser] 사용자 삭제 처리 오류 발생. ");
+                logger.error("아이디 : " + userModel.getUserId()");
+                logger.error("=============================== [ERROR End] ==================================");
+
+                ResultModel resultModel = new ResultModel(Constants.FAIL);
+                resultModel.setResultMsg("오류가 발생하였습니다. 관리자에게 문의해주세요.");
+
+                throw new BusinessException(resultModel);
+            }
+
+        }
+        else
+        {
+            ResultModel resultModel = new ResultModel(Constants.FAIL);
+            resultModel.setResultMsg("비밀번호가 일치하지 않습니다.");
+
+            throw new BusinessException(resultModel);
+        }
+    }
+
+    public boolean isDuplicationUserId( Map<String, Object> map ) throws Exception
+    {
+        boolean isDup = true;
+
+        /**
+         * 사용자 ID 존재 여부
+         */
+        CargoMap cargoMap = userMapper.isExistUserId( map );
+
+        String isExistUserId = (String)cargoMap.get("isExistUserId");
+
+        if ( "N".equals(isExistUserId))
+        {
+            isDup = false;
+        }
+
+        return isDup;
+    }
+
+}
+
+```
+
+---
