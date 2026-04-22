@@ -1,0 +1,267 @@
+---
+title: Service 
+parent: Spring
+nav_order: 3
+---
+
+# Service
+
+* 이 페이지는 Service 작성 양식과 역할, 사용 방법 등을 서술한 페이지입니다.
+
+---
+
+## Service란?
+
+* Service는 Controller와 DB 사이의 데이터 처리 및 흐름을 제어하는 역할을 담당합니다.
+* 본 구조에서는 Service의 영역을 추상체( Service )와, 구현체( ServiceImpl )로 분리하여 관리합니다.
+* 추상체( Service )는 **무엇을 할지**를 구현하고, 구현체( ServiceImpl )는 **어떻게 할지**를 구현합니다.
+
+## Service의 역할 ( 추상체 / Interface )
+
+* Service는 비즈니스 로직에서 사용되는 기능의 정의를 담당합니다.
+* 각 기능의 명칭과 함께 요청(Request) 및 응답(Response)에 사용되는 파라미터와 반환 타입을 선언합니다.
+* Controller와 ServiceImpl 사이를 연결하는 기준 역할을 수행합니다.
+* 기능 구현은 포함하지 않으며, ServiceImpl( 구현체 )에서 해당 기능을 구현합니다.
+* 선언 방법
+  * **public interface UserService**
+
+## ServiceImpl의 역할 ( 구현체 / Implements )
+
+* ServiceImpl은 Service에 정의된 기능을 실제로 구현하는 역할을 합니다.
+* Controller로부터 전달받은 데이터를 기반으로 비즈니스 로직을 수행하고 필요한 경우에는 DB를 호출하여 데이터 처리를 진행합니다.
+* 처리 전 데이터를 가공하여 데이터 처리를 진행하거나 처리 결과를 가공하여 Controller에 반환할 수 있습니다.
+* 선언 방법
+  * **@Service( value = "userService" )**
+  * **public class UserServiceImpl implements UserService**
+
+
+---
+
+### @Service
+
+  * 해당 클래스가 Service 역할을 수행하는 클래스임을 선언하는 어노테이션입니다.
+
+  * Spring이 해당 클래스를 Bean으로 관리하여, 다른 계층에서 자동으로 주입받아 사용할 수 있도록 합니다.
+
+---
+
+## Service 작성 양식
+
+* 아래는 회원에 관련된 내용을 처리하는 Service의 구성입니다.
+
+* 개발 시에 주석, 개행, 띄어쓰기 등을 참조하여 작성해주시길 바랍니다.
+
+---
+
+```java
+
+/**
+ * UserService Class ( Class 명 Class )
+ *
+ * @version : 1.0
+ * @author  : 생성자 ID ( SVN, GIT 등 )
+ * @date    : 생성일자 ( 20xx.xx.xx )
+ * @see
+ *
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ * -----------------------------------------------------------------
+ *     수정일            수정자                 수정내용
+ * -----------------------------------------------------------------
+ *     20xx.xx.xx        생성자 ID              최초 생성
+ *
+ * </pre>
+ */
+public interface UserService
+{
+    /**
+     * 회원가입 팝업 View
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param locale
+     * @param model
+     * @return
+     */
+    @RequestMapping( value = { "joinViewPopup" }, method = RequestMethod.GET )
+    public String joinViewPopup( Locale locale, Model model )
+    {
+        return "user/joinViewPopup";
+    }
+
+    /**
+     * 사용자 목록 조회
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param map
+     * @param model
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping( value = { "getUserList" } )
+    public @ResponseBody List<UserModel> getUserList( @RequestBody Map<String, Object> map,
+                                                      Model model,
+                                                      HttpSession session ) throws Exception
+    {
+        /** 사용자 목록 조회 */
+        List<UserModel> userModels = userService.getUserList( map );
+
+        return userModels;
+    }
+
+    /**
+     * 사용자 정보 등록
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param userJoinModel
+     * @param model
+     * @param locale
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @PostMapping( value = "regUser" )
+    public @ResponseBody Map<String, Object> regUser( @RequestBody UserJoinModel userJoinModel,
+                                                       Model model
+                                                       Locale locale
+                                                       HttpSession session ) throws Exception
+    {
+        // 결과 Return 모델
+        ResultModel resultModel = new ResultModel();
+
+        try
+        {
+            /**
+             * 사용자 정보 등록
+             */
+            userService.regUser( userJoinModel );
+
+            resultModel.setResultCode(Constants.SUCCESS);
+        }
+        catch( BusinessException be )
+        {
+            resultModel = be.getResultModel();
+        }
+        catch( Exception e )
+        {
+            resultModel = new ResultModel(Constants.FAIL);
+            resultModel.setResultMsg(e.getMessage());
+        }
+
+        Map<String, Object> ret = new HashMap<String, Object>();
+        ret.put("result", resultModel);
+
+        return ret;
+    }
+
+
+    /**
+     * 사용자 정보 저장
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param userModel
+     * @param model
+     * @param locale
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @PostMapping( value = "saveUser" )
+    public @ResponseBody Map<String, Object> saveUser( @RequestBody UserModel userModel,
+                                                       Model model
+                                                       Locale locale
+                                                       HttpSession session ) throws Exception
+    {
+        // 결과 Return 모델
+        ResultModel resultModel = new ResultModel();
+
+        try
+        {
+            /**
+             * 사용자 정보 저장
+             */
+            userService.saveUser( userModel );
+
+            resultModel.setResultCode(Constants.SUCCESS);
+        }
+        catch( BusinessException be )
+        {
+            resultModel = be.getResultModel();
+        }
+        catch( Exception e )
+        {
+            resultModel = new ResultModel(Constants.FAIL);
+            resultModel.setResultMsg(e.getMessage());
+        }
+
+        Map<String, Object> ret = new HashMap<String, Object>();
+        ret.put("result", resultModel);
+
+        return ret;
+    }
+
+    /**
+     * 사용자 정보 삭제
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param map
+     * @param model
+     * @param locale
+     * @param session
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("deleteUser")
+    public @ResponseBody Map<String, Object> deleteUser( @RequestBody Map<String, Object> map,
+                                                         Model model,
+                                                         Locale locale,
+                                                         HttpSession session,
+                                                         HttpServletRequest request ) throws Exception
+    {
+        // 결과 Return 모델
+        ResultModel resultModel = new ResultModel();
+
+        try
+        {
+            /**
+             * 사용자 정보 삭제
+             */
+            userService.deleteUser( map, request );
+
+            resultModel.setResultCode(Constants.SUCCESS);
+        }
+        catch ( BusinessException be )
+        {
+            resultModel = be.getResultModel();
+        }
+        catch( Exception e )
+        {
+            resultModel = new ResultModel(Constants.FAIL);
+            resultModel.setResultMsg(e.getMessage());
+        }
+
+        Map<String, Object> ret = new HashMap<String, Object>();
+        ret.put("result", resultModel);
+
+        return ret;
+    }
+
+}
+
+```
