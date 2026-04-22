@@ -252,12 +252,12 @@ public class UserController
      * @return
      * @throws Exception
      */
-    @PostMapping("userSecession")
-    public @ResponseBody Map<String, Object> userSecession( @RequestBody Map<String, Object> map,
-                                                            Model model,
-                                                            Locale locale,
-                                                            HttpSession session,
-                                                            HttpServletRequest request ) throws Exception
+    @PostMapping("deleteUser")
+    public @ResponseBody Map<String, Object> deleteUser( @RequestBody Map<String, Object> map,
+                                                         Model model,
+                                                         Locale locale,
+                                                         HttpSession session,
+                                                         HttpServletRequest request ) throws Exception
     {
         // 결과 Return 모델
         ResultModel resultModel = new ResultModel();
@@ -267,7 +267,7 @@ public class UserController
             /**
              * 사용자 정보 삭제
              */
-            userService.userSecession( map, request );
+            userService.deleteUser( map, request );
 
             resultModel.setResultCode(Constants.SUCCESS);
         }
