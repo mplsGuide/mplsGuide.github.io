@@ -267,7 +267,7 @@ public class UserController
             /**
              * 사용자 정보 삭제
              */
-            userService.deleteUser( map, request );
+            userService.deleteUser( map );
 
             resultModel.setResultCode(Constants.SUCCESS);
         }
