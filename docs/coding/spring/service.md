@@ -108,7 +108,7 @@ public interface UserService
      * @param userModel
      * @throws Exception
      */
-    public void saveUser( UserModel userModel ) throws Exception;
+    public void updateUser( UserModel userModel ) throws Exception;
 
     /**
      * 사용자 삭제
@@ -236,16 +236,7 @@ public class UserServiceImpl Implements UserService
      */
     public void updateUser( UserModel userModel ) throws Exception
     {
-        try
-        {
-            userMapper.updateUser( userModel );
-        }
-        catch ( Exception e )
-        {
-            logger.error(CommonUtils.getPrintStackTrace(e));
-
-            throw new Exception("오류가 발생하였습니다. 관리자에게 문의해주세요.");
-        }
+         userMapper.updateUser( userModel );
     }
 
     /**
