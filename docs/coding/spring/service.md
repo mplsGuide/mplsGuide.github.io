@@ -169,7 +169,10 @@ public class UserServiceImpl Implements UserService
      * @param map
      * @throws Exception
      */
-    public List<UserModel> getUserList( Map<String, Object> map ) throws Exception;
+    public List<UserModel> getUserList( Map<String, Object> map ) throws Exception
+    {
+        return userMapper.getUserList( map );
+    }
 
     /**
      * 사용자 등록
@@ -191,7 +194,7 @@ public class UserServiceImpl Implements UserService
         paramMap.put("userId", userJoinModel.getUserId());
 
         /**
-         * 사용자 ID 중복 여부
+         * 사용자 ID 중복 확인
          */
         isDup = this.isDuplicationUserId(paramMap);
         
@@ -231,7 +234,19 @@ public class UserServiceImpl Implements UserService
      * @param userModel
      * @throws Exception
      */
-    public void saveUser( UserModel userModel ) throws Exception;
+    public void updateUser( UserModel userModel ) throws Exception
+    {
+        try
+        {
+            userMapper.updateUser( userModel );
+        }
+        catch ( Exception e )
+        {
+            logger.error(CommonUtils.getPrintStackTrace(e));
+
+            throw new Exception("오류가 발생하였습니다. 관리자에게 문의해주세요.");
+        }
+    }
 
     /**
      * 사용자 삭제
@@ -285,6 +300,16 @@ public class UserServiceImpl Implements UserService
         }
     }
 
+    /**
+     * 사용자 ID 중복 확인
+     *
+     * @version : 1.0
+     * @author  : 생성자 ID ( SVN, GIT 등 )
+     * @date    : 생성일자 ( 20xx.xx.xx )
+     *
+     * @param map
+     * @throws Exception
+     */
     public boolean isDuplicationUserId( Map<String, Object> map ) throws Exception
     {
         boolean isDup = true;
@@ -307,5 +332,3 @@ public class UserServiceImpl Implements UserService
 }
 
 ```
-
----
