@@ -61,7 +61,7 @@ nav_order: 2
 
 ---
 
-## 작성 양식
+## Controller 작성 양식
 
 * 아래는 회원에 관련된 내용을 처리하는 Controller의 구성입니다.
 
