@@ -203,7 +203,7 @@ public class UserController
      * @return
      * @throws Exception
      */
-    @PostMapping( value = "saveUser" )
+    @PostMapping( value = "updateUser" )
     public @ResponseBody Map<String, Object> saveUser( @RequestBody UserModel userModel,
                                                        Model model
                                                        Locale locale
@@ -217,7 +217,7 @@ public class UserController
             /**
              * 사용자 정보 저장
              */
-            userService.saveUser( userModel );
+            userService.updateUser( userModel );
 
             resultModel.setResultCode(Constants.SUCCESS);
         }
